@@ -1,61 +1,44 @@
 /* eslint-disable no-console */
-'use strict';
+"use strict";
 
 /**
  * Example store structure
  */
-const questions = [
-  {
-    question: 'Which animal does not appear in the Chinese zodiac?',
-    answers: [
-      'Dragon',
-      'Rabbit',
-      'Dog',
-      'Hummingbird'
-    ],
-    correctAnswer: 'Hummingbird'
+const STORE = {
+  questions: [
+    {
+      question: "Which animal does not appear in the Chinese zodiac?",
+      answers: ["Dragon", "Rabbit", "Dog", "Hummingbird"],
+      correctAnswer: "Hummingbird",
+    },
+    {
+      question: "Which Olympic sport is Michael Phelps known for?",
+      answers: ["Snowboarding", "Skiing", "Running", "Swimming"],
+      correctAnswer: "Swimming",
+    },
+    {
+      question: '"I see dead people," is a line from which horror film…',
+      answers: ["The Sixth Sense", "The Grudge", "The Shining", "The Exorcist"],
+      correctAnswer: "The Exorcist",
+    },
+    {
+      question:
+        "Which one of these characters aren't a part of the Friends group?",
+      answers: ["Rachel", "Joey", "Gunther", "Monica"],
+      correctAnswer: "Gunther",
+    },
+    {
+      question: "Fe is the chemical symbol for..",
+      answers: ["Zinc", "Hydrogen", "Fluorine", "Iron"],
+      correctAnswer: "Iron",
+    },
+  ],
+  state: {
+    score: 0,
+    currentIndex: 0,
+    feedback: false,
   },
-  {
-    question: 'Which Olympic sport is Michael Phelps known for?',
-    answers: [
-      'Snowboarding',
-      'Skiing',
-      'Running',
-      'Swimming'
-    ],
-    correctAnswer: 'Swimming'
-  },
-  {
-    question: '"I see dead people," is a line from which horror film…',
-    answers: [
-      'The Sixth Sense',
-      'The Grudge',
-      'The Shining',
-      'The Exorcist'
-    ],
-    correctAnswer: 'The Exorcist'
-  },
-  {
-    question: 'Which one of these characters aren\'t a part of the Friends group?',
-    answers: [
-      'Rachel',
-      'Joey',
-      'Gunther',
-      'Monica'
-    ],
-    correctAnswer: 'Gunther'
-  },
-  {
-    question: 'Fe is the chemical symbol for..',
-    answers: [
-      'Zinc',
-      'Hydrogen',
-      'Fluorine',
-      'Iron'
-    ],
-    correctAnswer: 'Iron'
-  }
-]
+};
 /**
  *
  * Technical requirements:
@@ -74,10 +57,11 @@ const questions = [
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
 // These functions return HTML templates
-function generateQuestionTemplate(question) {
-  console.log('generate question template');
-  let answers = question.answers.map(generateAnswerElement).join('');
-  let submitButton = '<input type="submit" id="next-question" value="Select Answer">';
+function generateQuestionTemplate(index) {
+  console.log("generate question template");
+  let answers = store.questions[index].answers.map(generateAnswerElement).join("");
+  let submitButton =
+    '<input type="submit" id="next-question" value="Select Answer">';
   return `
   <h2>${question.question}</h2>
     <form>
@@ -88,7 +72,7 @@ function generateQuestionTemplate(question) {
 }
 
 function generateAnswerElement(answer) {
-  console.log('generate answer template');
+  console.log("generate answer template");
   return `
     <p>
       <input type="radio" id="${answer}" name="answer" value="${answer}"> 
@@ -97,32 +81,30 @@ function generateAnswerElement(answer) {
   `;
 }
 
-
 /********** RENDER FUNCTION(S) **********/
 
 // These functions will return the views to render
 
 function welcomeView() {
-  console.log('welcomeView has run');
+  console.log("welcomeView has run");
   handleStartQuiz();
   return `
   <button id="start-quiz">Start Quiz</button>
   `;
 }
 
-function questionView(
-  state = {score: 0, currentIndex: 0, feedback: false}) {
-  console.log('questionView has run');
-  return generateQuestionTemplate(questions[state.currentIndex]);
+function questionView() {
+  console.log("questionView has run");
+  let currentQuestion = store.state.currentIndex
+  return generateQuestionTemplate(currentQuestion);
 }
-
 
 /********** RENDER FUNCTION(S) **********/
 
-function render(currentView, args) {
-  console.log('render has run');
-  let html = currentView(args);
-  $('main').html(html);
+function render(currentView) {
+  console.log("render has run");
+  let html = currentView();
+  $("main").html(html);
 }
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
@@ -130,9 +112,9 @@ function render(currentView, args) {
 /********** EVENT HANDLER FUNCTIONS **********/
 
 function handleStartQuiz() {
-  console.log('handleStartQuiz has run');
-  $('main').on('click', '#start-quiz', event => {
-    console.log('start quiz click detected');
+  console.log("handleStartQuiz has run");
+  $("main").on("click", "#start-quiz", (event) => {
+    console.log("start quiz click detected");
     render(questionView);
   });
 }
@@ -143,7 +125,7 @@ function handleStartQuiz() {
 
 // render will render the current view.
 
-// welcome view will render with start button. 
+// welcome view will render with start button.
 // when start button is clicked, it will render questions view.
 
 // Question view will have a select button which will re-render the question with feedback
@@ -154,7 +136,7 @@ function handleStartQuiz() {
 // Question view will receive an argument holding the current question index and cumulative score, and
 // whether the question has been answered and feedback should be shown.
 
-// When the last question is reached, there will be a submit button. 
+// When the last question is reached, there will be a submit button.
 
 // The submit button, will render results view. Results view will receive an argument
 // that will hold the final score.
@@ -165,4 +147,4 @@ function main() {
   render(welcomeView);
 }
 
-$(main)
+$(main);
