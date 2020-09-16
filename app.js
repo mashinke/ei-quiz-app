@@ -100,14 +100,15 @@ function questionView() {
   if (STORE.state.answer) {
     if (STORE.state.answer === STORE.questions[currentIndex].correctAnswer) {
       STORE.state.score++;
+      STORE.state.currentIndex++;
       return `
       Correct Answer
-      `
+      <button id="next-question">Next Question</button>
+      `;
     }
   }
   if(STORE.state.currentIndex < STORE.questions.length){
     questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
-    STORE.state.currentIndex++;
     return questionTemplate;
   } 
 }
@@ -143,7 +144,7 @@ function handleNextQuestion() {
 
 function handleSelectAnswer() {
   $('main').on('click', '#select-answer', (event) => {
-    console.log('answer selected');
+    console.log('answer selected: ', $('input[name="answer"]:checked').val());
     event.preventDefault();
     STORE.state.answer = $('input[name="answer"]:checked').val();
     render(questionView);
