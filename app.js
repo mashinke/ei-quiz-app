@@ -91,8 +91,17 @@ const store = {
 // These functions handle events (submit, click, etc)
 
 // welcome view will render with start button. 
-// when start button is clicked, it will render questions view
-// Question view will have a next question button that when the last question 
-// is reached, there will be a submit button. 
-// The submit button, will render results view 
-// results view will render with start over button that will render into the welcome view
+// when start button is clicked, it will render questions view.
+
+// Question view will have a select button which will re-render the question with feedback
+// and a next question button that will render the next question. 
+
+// Question view will receive an argument holding the current question index and cumulative score, and
+// whether the question has been answered and feedback should be shown.
+
+// When the last question is reached, there will be a submit button. 
+
+// The submit button, will render results view. Results view will receive an argument
+// that will hold the final score.
+
+// results view will have a start over button that will render the welcome view.
