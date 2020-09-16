@@ -7,24 +7,54 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'Which animal does not appear in the Chinese zodiac?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'Dragon',
+        'Rabbit',
+        'Dog',
+        'Hummingbird'
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'Hummingbird'
     },
     {
-      question: 'What is the current year?',
+      question: 'Which Olympic sport is Michael Phelps known for?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        'Snowboarding',
+        'Skiing',
+        'Running',
+        'Swimming'
       ],
-      correctAnswer: '2019'
+      correctAnswer: 'Swimming'
+    },
+    {
+      question: '"I see dead people," is a line from which horror film…',
+      answers: [
+        'The Sixth Sense',
+        'The Grudge',
+        'The Shining',
+        'The Exorcist'
+      ],
+      correctAnswer: 'The Exorcist'
+    },
+    {
+      question: 'Which one of these characters aren't a part of the Friends group?',
+    answers: [
+        'Rachel',
+        'Joey',
+        'Gunther',
+        'Monica'
+      ],
+      correctAnswer: 'Gunther'
+    },
+    {
+      question: 'Fe is the chemical symbol for..',
+      answers: [
+        'Zinc',
+        'Hydrogen',
+        'Fluorine',
+        'Iron'
+      ],
+      correctAnswer: 'Iron'
     }
   ],
   quizStarted: false,
@@ -33,10 +63,10 @@ const store = {
 };
 
 /**
- * 
+ *
  * Technical requirements:
- * 
- * Your app should include a render() function, that regenerates the view each time the store is updated. 
+ *
+ * Your app should include a render() function, that regenerates the view each time the store is updated.
  * See your course material and access support for more details.
  *
  * NO additional HTML elements should be added to the index.html file.
@@ -44,7 +74,7 @@ const store = {
  * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
  *
  * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- * 
+ *
  */
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
