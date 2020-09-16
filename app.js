@@ -88,13 +88,17 @@ const store = {
 
 function welcomeView(){
   console.log('welcomeView has run');
+  return `
+  <button id="start-quiz">Start Quiz</button>
+  `
 }
 
 /********** RENDER FUNCTION(S) **********/
 
 function render(currentView){
   console.log('render has run');
-  welcomeView();
+  let html = currentView();
+  $('main').html(html)
 }
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
@@ -124,7 +128,7 @@ function render(currentView){
 // results view will have a start over button that will render the welcome view.
 
 function main(){
-  render();
+  render(welcomeView);
 }
 
 $(main)
