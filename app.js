@@ -84,8 +84,17 @@ const store = {
 
 /********** RENDER FUNCTION(S) **********/
 
+// These functions will return the views to render
+
+function welcomeView(){
+  console.log('welcomeView has run');
+}
+
+/********** RENDER FUNCTION(S) **********/
+
 function render(currentView){
   console.log('render has run');
+  welcomeView();
 }
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
