@@ -88,7 +88,6 @@ function generateAnswerElement(answer) {
 
 function welcomeView() {
   console.log('welcomeView has run');
-  handleStartQuiz();
   return `
   <button id="start-quiz">Start Quiz</button>
   `;
@@ -98,7 +97,6 @@ function questionView() {
   console.log('questionView has run on question ', STORE.state.currentIndex);
   let questionTemplate = '';
   if(STORE.state.currentIndex < STORE.questions.length){
-    handleNextQuestion();
     questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
     STORE.state.currentIndex++;
     return questionTemplate;
@@ -161,6 +159,8 @@ function handleNextQuestion() {
 // results view will have a start over button that will render the welcome view.
 
 function main() {
+  handleStartQuiz();
+  handleNextQuestion();
   render(welcomeView);
 }
 
