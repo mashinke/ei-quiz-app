@@ -36,7 +36,7 @@ const STORE = {
   state: {
     score: 0,
     currentIndex: 0,
-    feedback: false,
+    answer: null
   },
 };
 /**
@@ -62,7 +62,7 @@ function generateQuestionTemplate(index) {
   let question = STORE.questions[index];
   let answers = question.answers.map(generateAnswerElement).join('');
   let submitButton =
-    '<input type="submit" id="next-question" value="Select Answer">';
+    '<input type="submit" id="select-answer" value="Select Answer">';
   return `
   <h2>${question.question}</h2>
     <form>
@@ -96,13 +96,20 @@ function welcomeView() {
 function questionView() {
   console.log('questionView has run on question ', STORE.state.currentIndex);
   let questionTemplate = '';
+  let currentIndex = STORE.state.currentIndex;
+  if (STORE.state.answer) {
+    if (STORE.state.answer === STORE.questions[currentIndex].correctAnswer) {
+      STORE.state.score++;
+      return `
+      Correct Answer
+      `
+    }
+  }
   if(STORE.state.currentIndex < STORE.questions.length){
     questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
     STORE.state.currentIndex++;
     return questionTemplate;
-  } else {
-    // return resultView();
-  }
+  } 
 }
 
 /********** RENDER FUNCTION(S) **********/
@@ -134,6 +141,15 @@ function handleNextQuestion() {
   });
 }
 
+function handleSelectAnswer() {
+  $('main').on('click', '#select-answer', (event) => {
+    console.log('answer selected');
+    event.preventDefault();
+    STORE.state.answer = $('input[name="answer"]:checked').val();
+    render(questionView);
+  })
+
+}
 // These functions handle events (submit, click, etc)
 
 // main function will call render with the welcome view.
@@ -143,13 +159,11 @@ function handleNextQuestion() {
 // welcome view will render with start button.
 // when start button is clicked, it will render questions view.
 
-// Question view will have a select button which will re-render the question with feedback
+// Question view will have a select button which will re-render the question with feedback view.
+// Feedback view will have a next question button and show user if the answer selected is the correct one.
 // and a next question button that will render the next question.
 
 // If question state is undefined, Question view will initialize it.
-
-// Question view will receive an argument holding the current question index and cumulative score, and
-// whether the question has been answered and feedback should be shown.
 
 // When the last question is reached, there will be a submit button.
 
@@ -159,6 +173,7 @@ function handleNextQuestion() {
 // results view will have a start over button that will render the welcome view.
 
 function main() {
+  handleSelectAnswer();
   handleStartQuiz();
   handleNextQuestion();
   render(welcomeView);
