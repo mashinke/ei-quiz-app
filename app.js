@@ -94,6 +94,10 @@ function render(currentView){
 
 // These functions handle events (submit, click, etc)
 
+// main function will call render with the welcome view.
+
+// render will render the current view.
+
 // welcome view will render with start button. 
 // when start button is clicked, it will render questions view.
 
