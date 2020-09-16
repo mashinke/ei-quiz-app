@@ -94,11 +94,18 @@ function welcomeView(){
   `;
 }
 
+function questionView(state) {
+  console.log("questionView has run"); 
+  return `
+  ${state}
+  `
+}
+
 /********** RENDER FUNCTION(S) **********/
 
-function render(currentView){
+function render(currentView, args){
   console.log('render has run');
-  let html = currentView();
+  let html = currentView(args);
   $('main').html(html);
 }
 
@@ -110,6 +117,7 @@ function handleStartQuiz(){
   console.log('handleStartQuiz has run');
   $('main').on('click', '#start-quiz', event => {
     console.log('start quiz click detected');
+    render(questionView)
   });
 }
 
