@@ -84,6 +84,10 @@ const store = {
 
 /********** RENDER FUNCTION(S) **********/
 
+function render(currentView){
+  console.log('render has run');
+}
+
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 /********** EVENT HANDLER FUNCTIONS **********/
@@ -105,3 +109,9 @@ const store = {
 // that will hold the final score.
 
 // results view will have a start over button that will render the welcome view.
+
+function main(){
+  render();
+}
+
+$(main)
