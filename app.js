@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict';
 
 /**
@@ -88,3 +89,10 @@ const store = {
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
+
+// welcome view will render with start button. 
+// when start button is clicked, it will render questions view
+// Question view will have a next question button that when the last question 
+// is reached, there will be a submit button. 
+// The submit button, will render results view 
+// results view will render with start over button that will render into the welcome view
