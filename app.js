@@ -90,7 +90,7 @@ function welcomeView(){
   console.log('welcomeView has run');
   return `
   <button id="start-quiz">Start Quiz</button>
-  `
+  `;
 }
 
 /********** RENDER FUNCTION(S) **********/
@@ -98,7 +98,7 @@ function welcomeView(){
 function render(currentView){
   console.log('render has run');
   let html = currentView();
-  $('main').html(html)
+  $('main').html(html);
 }
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
