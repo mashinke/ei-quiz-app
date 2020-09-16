@@ -82,7 +82,7 @@ function generateAnswerElement(answer) {
   `;
 }
 
-/********** RENDER FUNCTION(S) **********/
+/********** VIEW FUNCTION(S) **********/
 
 // These functions will return the views to render
 
@@ -95,8 +95,16 @@ function welcomeView() {
 }
 
 function questionView() {
-  console.log('questionView has run');
-  return generateQuestionTemplate(STORE.state.currentIndex);
+  console.log('questionView has run on question ', STORE.state.currentIndex);
+  let questionTemplate = '';
+  if(STORE.state.currentIndex < STORE.questions.length){
+    handleNextQuestion();
+    questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
+    STORE.state.currentIndex++;
+    return questionTemplate;
+  } else {
+    // return resultView();
+  }
 }
 
 /********** RENDER FUNCTION(S) **********/
@@ -115,6 +123,15 @@ function handleStartQuiz() {
   console.log('handleStartQuiz has run');
   $('main').on('click', '#start-quiz', (event) => {
     console.log('start quiz click detected');
+    event.preventDefault();
+    render(questionView);
+  });
+}
+
+function handleNextQuestion() {
+  $('main').on('click', '#next-question', (event) => {
+    console.log('next question click detected');
+    event.preventDefault();
     render(questionView);
   });
 }
