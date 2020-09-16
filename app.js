@@ -88,6 +88,7 @@ const store = {
 
 function welcomeView(){
   console.log('welcomeView has run');
+  handleStartQuiz();
   return `
   <button id="start-quiz">Start Quiz</button>
   `;
@@ -104,6 +105,13 @@ function render(currentView){
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 /********** EVENT HANDLER FUNCTIONS **********/
+
+function handleStartQuiz(){
+  console.log('handleStartQuiz has run');
+  $('main').on('click', '#start-quiz', event => {
+    console.log('start quiz click detected');
+  });
+}
 
 // These functions handle events (submit, click, etc)
 
