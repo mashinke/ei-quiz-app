@@ -4,65 +4,58 @@
 /**
  * Example store structure
  */
-const store = {
-  // 5 or more questions are required
-  questions: [
-    {
-      question: 'Which animal does not appear in the Chinese zodiac?',
-      answers: [
-        'Dragon',
-        'Rabbit',
-        'Dog',
-        'Hummingbird'
-      ],
-      correctAnswer: 'Hummingbird'
-    },
-    {
-      question: 'Which Olympic sport is Michael Phelps known for?',
-      answers: [
-        'Snowboarding',
-        'Skiing',
-        'Running',
-        'Swimming'
-      ],
-      correctAnswer: 'Swimming'
-    },
-    {
-      question: '"I see dead people," is a line from which horror film…',
-      answers: [
-        'The Sixth Sense',
-        'The Grudge',
-        'The Shining',
-        'The Exorcist'
-      ],
-      correctAnswer: 'The Exorcist'
-    },
-    {
-      question: 'Which one of these characters aren\'t a part of the Friends group?',
-      answers: [
-        'Rachel',
-        'Joey',
-        'Gunther',
-        'Monica'
-      ],
-      correctAnswer: 'Gunther'
-    },
-    {
-      question: 'Fe is the chemical symbol for..',
-      answers: [
-        'Zinc',
-        'Hydrogen',
-        'Fluorine',
-        'Iron'
-      ],
-      correctAnswer: 'Iron'
-    }
-  ],
-  quizStarted: false,
-  questionNumber: 0,
-  score: 0
-};
-
+const questions = [
+  {
+    question: 'Which animal does not appear in the Chinese zodiac?',
+    answers: [
+      'Dragon',
+      'Rabbit',
+      'Dog',
+      'Hummingbird'
+    ],
+    correctAnswer: 'Hummingbird'
+  },
+  {
+    question: 'Which Olympic sport is Michael Phelps known for?',
+    answers: [
+      'Snowboarding',
+      'Skiing',
+      'Running',
+      'Swimming'
+    ],
+    correctAnswer: 'Swimming'
+  },
+  {
+    question: '"I see dead people," is a line from which horror film…',
+    answers: [
+      'The Sixth Sense',
+      'The Grudge',
+      'The Shining',
+      'The Exorcist'
+    ],
+    correctAnswer: 'The Exorcist'
+  },
+  {
+    question: 'Which one of these characters aren\'t a part of the Friends group?',
+    answers: [
+      'Rachel',
+      'Joey',
+      'Gunther',
+      'Monica'
+    ],
+    correctAnswer: 'Gunther'
+  },
+  {
+    question: 'Fe is the chemical symbol for..',
+    answers: [
+      'Zinc',
+      'Hydrogen',
+      'Fluorine',
+      'Iron'
+    ],
+    correctAnswer: 'Iron'
+  }
+]
 /**
  *
  * Technical requirements:
@@ -86,7 +79,7 @@ const store = {
 
 // These functions will return the views to render
 
-function welcomeView(){
+function welcomeView() {
   console.log('welcomeView has run');
   handleStartQuiz();
   return `
@@ -94,16 +87,17 @@ function welcomeView(){
   `;
 }
 
-function questionView(state) {
-  console.log("questionView has run"); 
+function questionView(
+  state = {score: 0, currentIndex: 0, feedback: false}) {
+  console.log('questionView has run');
   return `
-  ${state}
-  `
+  ${questions[state.currentIndex].question}
+  `;
 }
 
 /********** RENDER FUNCTION(S) **********/
 
-function render(currentView, args){
+function render(currentView, args) {
   console.log('render has run');
   let html = currentView(args);
   $('main').html(html);
@@ -113,11 +107,11 @@ function render(currentView, args){
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
-function handleStartQuiz(){
+function handleStartQuiz() {
   console.log('handleStartQuiz has run');
   $('main').on('click', '#start-quiz', event => {
     console.log('start quiz click detected');
-    render(questionView)
+    render(questionView);
   });
 }
 
@@ -131,7 +125,9 @@ function handleStartQuiz(){
 // when start button is clicked, it will render questions view.
 
 // Question view will have a select button which will re-render the question with feedback
-// and a next question button that will render the next question. 
+// and a next question button that will render the next question.
+
+// If question state is undefined, Question view will initialize it.
 
 // Question view will receive an argument holding the current question index and cumulative score, and
 // whether the question has been answered and feedback should be shown.
@@ -143,7 +139,7 @@ function handleStartQuiz(){
 
 // results view will have a start over button that will render the welcome view.
 
-function main(){
+function main() {
   render(welcomeView);
 }
 
