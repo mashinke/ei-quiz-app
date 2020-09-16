@@ -75,17 +75,26 @@ const questions = [
 
 // These functions return HTML templates
 function generateQuestionTemplate(question) {
-  console.log("generate question template")
-  let answers = question.answers.map(generateAnswerElement)
-    $('<form></form>').html(answers)
+  console.log('generate question template');
+  let answers = question.answers.map(generateAnswerElement).join('');
+  let submitButton = '<input type="submit" id="next-question" value="Select Answer">';
+  return `
+  <h2>${question.question}</h2>
+    <form>
+      ${answers}
+      ${submitButton}
+    </form>
+  `;
 }
 
 function generateAnswerElement(answer) {
-  console.log("generate answer template")
+  console.log('generate answer template');
   return `
-  <input type="radio" id="${answer}" name="answer" value="${answer}"> 
-  <label for="${answer}">Other</label>
-  `
+    <p>
+      <input type="radio" id="${answer}" name="answer" value="${answer}"> 
+      <label for="${answer}">${answer}</label>
+    </p>
+  `;
 }
 
 
@@ -104,7 +113,7 @@ function welcomeView() {
 function questionView(
   state = {score: 0, currentIndex: 0, feedback: false}) {
   console.log('questionView has run');
-  return generateQuestionTemplate(questions[state.currentIndex].question);
+  return generateQuestionTemplate(questions[state.currentIndex]);
 }
 
 
