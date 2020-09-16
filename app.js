@@ -37,8 +37,8 @@ const store = {
       correctAnswer: 'The Exorcist'
     },
     {
-      question: 'Which one of these characters aren't a part of the Friends group?',
-    answers: [
+      question: 'Which one of these characters aren\'t a part of the Friends group?',
+      answers: [
         'Rachel',
         'Joey',
         'Gunther',
