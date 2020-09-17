@@ -69,7 +69,6 @@ function generateQuestionTemplate(index) {
   let submitButton =
     '<input type="submit" id="select-answer" value="Select Answer">';
   return `
-  ${headerTemplate()};
   <h2>${question.question}</h2>
   <form>
     ${answers}
@@ -92,7 +91,7 @@ function generateAnswerElement(answer) {
 function generateFeedbackTemplate(feedback) {
   let button = '<button id="next-question">Next Question</button>';
   if (STORE.state.currentIndex === STORE.questions.length) {
-    button = '<button id="results">Results</button>'
+    button = '<button id="results">Results</button>';
   }
   return `
     <p>${feedback}</p>
@@ -102,26 +101,28 @@ function generateFeedbackTemplate(feedback) {
 }
 
 function generateResultTemplate() {
-  console.log('result template page ran')
+  console.log('result template page ran');
   return `
   <h2>SCORE: </h2>
   <p>${STORE.state.score}/${STORE.questions.length}</p>
   <button id="start-over">Start Over</button>
-  `
+  `;
 }
 
 function footerTemplate() {
+  let attempts = STORE.state.currentIndex;
+  let currentQuestion = attempts;
+  let message = STORE.state.message;
+  console.log('answer ', STORE.state.answer);
+  if (STORE.state.answer) {
+    attempts++;
+  }
   return `
   <footer>
-    <p>Current score: ${STORE.state.score} corrent answers out of ${STORE.state.currentIndex} attempted</p>
-    <p>Current question: ${STORE.state.currentIndex + 1} out of ${STORE.questions.length}</p>
+    ${message ? `<p class="message">${message}</p>` : ''}
+    <p>Current score: ${STORE.state.score} corrent answers out of ${attempts} attempted</p>
+    <p>Current question: ${currentQuestion} out of ${STORE.questions.length}</p>
   </footer>`;
-}
-
-function headerTemplate() {
-  let message = STORE.state.message;
-  console.log(message);
-  return `<ul>${message}</ul>`;
 }
 
 /********** VIEW FUNCTION(S) **********/
@@ -144,19 +145,18 @@ function feedbackView() {
   console.log('feedback view ran');
   console.log('state: ', STORE.state);
   let correctAnswer = STORE.questions[STORE.state.currentIndex].correctAnswer;
+  let feedbackTemplate = '';
   if (STORE.state.answer === correctAnswer) {
     console.log('right answer');
     STORE.state.score++;
-    STORE.state.currentIndex++;
-    let feedbackTemplate = generateFeedbackTemplate('Correct!');
-    return feedbackTemplate;
+    feedbackTemplate = generateFeedbackTemplate('Correct!');
   } else {
     console.log('wrong answer');
-    STORE.state.currentIndex++;
-    let feedbackTemplate = generateFeedbackTemplate(`Wrong Answer. The correct answer is 
+    feedbackTemplate = generateFeedbackTemplate(`Wrong Answer. The correct answer is 
       ${correctAnswer}`);
-    return feedbackTemplate;
   }
+  STORE.state.currentIndex++;
+  return feedbackTemplate;
 }
 
 function resultView() {
@@ -190,6 +190,7 @@ function handleNextQuestion() {
   $('main').on('click', '#next-question', (event) => {
     console.log('next question click detected');
     event.preventDefault();
+    STORE.state.answer = null;
     render(questionView);
   });
 }
@@ -211,10 +212,10 @@ function handleSelectAnswer() {
 
 function handleResultButton() {
   $('main').on('click', '#results', (event) => {
-    console.log('results button works')
+    console.log('results button works');
     event.preventDefault();
     render(resultView);
-  })
+  });
 }
 
 function handleStartOverButton() {
@@ -227,7 +228,7 @@ function handleStartOverButton() {
       answer: null,
     };
     render(welcomeView);
-  })
+  });
 }
 // These functions handle events (submit, click, etc)
 
