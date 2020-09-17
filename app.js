@@ -5,6 +5,8 @@
  * Example store structure
  */
 const STORE = {
+  title: 'Random Trivia Quiz',
+  welcomeText: 'Can you answer some totally unexpected questions?',
   questions: [
     {
       question: 'Which animal does not appear in the Chinese zodiac?',
@@ -59,7 +61,9 @@ const STORE = {
 
 // These functions return HTML templates
 function generateWelcomeViewTemplate() {
-  return '<button id="start-quiz">Start Quiz</button>';
+  return `
+  <p>${STORE.welcomeText}</p>
+  <button id="start-quiz">Start Quiz</button>`;
 }
 
 function generateQuestionTemplate(index) {
@@ -173,6 +177,7 @@ function resultView() {
 
 function render(currentView) {
   console.log('render has run');
+  $('h1, title').html(STORE.title);
   let html = currentView();
   $('main').html(html);
   STORE.state.message = '';
