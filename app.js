@@ -104,8 +104,8 @@ function generateFeedbackTemplate(feedback) {
 function generateResultTemplate() {
   console.log('result template page ran');
   return `
-  <h2>SCORE: </h2>
-  <p>${STORE.state.score}/${STORE.questions.length}</p>
+  <header><h2>Final Score</h2></header>
+  <p>You answered ${STORE.state.score} questions out of ${STORE.questions.length} correctly!</p>
   <button id="start-over">Start Over</button>
   `;
 }
@@ -116,7 +116,7 @@ function generateHeaderTemplate() {
 
 function generateFooterTemplate() {
   let attempts = STORE.state.currentIndex;
-  let currentQuestion = attempts;
+  let currentQuestion = attempts + 1;
   let message = STORE.state.message;
   console.log('answer ', STORE.state.answer);
   if (STORE.state.answer) {
@@ -154,7 +154,7 @@ function feedbackView() {
   if (STORE.state.answer === correctAnswer) {
     console.log('right answer');
     STORE.state.score++;
-    feedbackTemplate = generateFeedbackTemplate('Correct!');
+    feedbackTemplate = generateFeedbackTemplate(`${correctAnswer} is correct!`);
   } else {
     console.log('wrong answer');
     feedbackTemplate = generateFeedbackTemplate(`Wrong Answer. The correct answer is 
