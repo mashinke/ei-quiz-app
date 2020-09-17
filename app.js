@@ -69,7 +69,7 @@ function generateQuestionTemplate(index) {
   let submitButton =
     '<input type="submit" id="select-answer" value="Select Answer">';
   return `
-  ${headerTemplate()};
+  ${headerTemplate()}
   <h2>${question.question}</h2>
   <form>
     ${answers}
@@ -97,7 +97,10 @@ function generateFeedbackTemplate(feedback) {
   return `
     <p>${feedback}</p>
     <p>${button}</p>
-    ${footerTemplate()}
+    <footer>
+    <p>Current score: ${STORE.state.score} corrent answers out of ${STORE.state.currentIndex} attempted</p>
+    <p>Current question: ${STORE.state.currentIndex} out of ${STORE.questions.length}</p>
+  </footer>
   `;
 }
 
@@ -224,7 +227,8 @@ function handleStartOverButton() {
     STORE.state = {
       score: 0,
       currentIndex: 0,
-      answer: null,
+      answer: '',
+      message: ''
     };
     render(welcomeView);
   })
