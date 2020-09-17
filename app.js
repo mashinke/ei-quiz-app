@@ -71,11 +71,13 @@ function generateQuestionTemplate(index) {
   let question = STORE.questions[index];
   let answers = question.answers.map(generateAnswerElement).join('');
   let submitButton =
-    '<input type="submit" id="select-answer" value="Select Answer">';
+    '<input type="submit" id="select-answer" value="Select Answer" class="submit-button">';
   return `
   ${generateHeaderTemplate()}
   <form>
-    ${answers}
+    <div class="choices">
+      ${answers}
+    </div>
     ${submitButton}
   </form>
   ${generateFooterTemplate()}

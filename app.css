@@ -7,45 +7,64 @@ body {
   color: #FFFFFF;
 }
 
+main {
+  padding: 0 1rem;
+}
+
 h1 {
-  padding-top: 10%;
   font-size: 38px;
+  margin-top: .75rem;
 }
 
-button {
-  padding: 5px; 
+h2 {
+  font-size: 24px;
+}
+
+button, .submit-button, .answer-item label{
+  padding: 1rem; 
   border-radius: 3px;
-  font-size: 25px;
+  font-size: 18px;
+  border: none;
 }
 
-input {
-  appearance: none;
+input[type="radio"] {
+  display: none;
 }
 
 .message {
   color: red;
 }
 
-.answers {
+.answer-item label {
   background-color: darkolivegreen; 
-  padding: 2%; 
-  border-radius: 3px;
+  display: block;
 }
 
- {
+.choices {
   display: flex; 
   flex-direction: column;
   justify-content: center;
+  width: 80%;
+  margin: auto;
 }
-.answers:checked {
+
+input[type="radio"]:checked + label{
   background-color: saddlebrown;
 }
 
+.submit-button {
+  margin: 1rem 0 0;
+  background-color: darksalmon;
+}
+
 @media all and (min-width: 800px) {
-    .answers {
-      display: flex; 
+    .choices {
       flex-direction: row;
     }
-} 
-
-
+    .answer-item {
+      margin: 0 2rem 0 0;
+    }
+    .answer-item:last-child {
+      margin-right: 0;
+    }
+}
