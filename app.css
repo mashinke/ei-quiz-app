@@ -1,8 +1,24 @@
-/* Your styles should be mobile-first and responsive */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
-/** 
-  * If you are unclear on how to utilize a mobile-first, responsive technique to write your CSS, here is an example: 
-  *
-  * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
-  *
-*/
+body {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  background-color: #000000FF; 
+  color: #FFFFFF;
+}
+
+h1 {
+  padding-top: 10%;
+  font-size: 38px;
+}
+
+button {
+  padding: 5px; 
+  border-radius: 3px;
+  font-size: 25px;
+}
+
+.message {
+  color: red;
+}
+
