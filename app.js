@@ -19,7 +19,7 @@ const STORE = {
     {
       question: '"I see dead people," is a line from which horror film…',
       answers: ['The Sixth Sense', 'The Grudge', 'The Shining', 'The Exorcist'],
-      correctAnswer: 'The Exorcist',
+      correctAnswer: 'The Sixth Sense',
     },
     {
       question:
@@ -87,9 +87,13 @@ function generateAnswerElement(answer) {
 }
 
 function generateFeedbackTemplate(feedback){
+  let button = '<button id="next-question">Next Question</button>';
+  if (STORE.state.currentIndex === STORE.questions.length) {
+    button = '<button id="results">Results</button>'
+  }
   return `
     <p>${feedback}</p>
-    <p><button id="next-question">Next Question</button></p>
+    <p>${button}</p>
   `;
 }
 
@@ -112,7 +116,8 @@ function questionView() {
 function feedbackView() {
   console.log('feedback view ran');
   console.log('state: ', STORE.state);
-  if (STORE.state.answer === STORE.questions[STORE.state.currentIndex].correctAnswer) {
+  let correctAnswer = STORE.questions[STORE.state.currentIndex].correctAnswer;
+  if (STORE.state.answer === correctAnswer) {
     console.log('right answer');
     STORE.state.score++;
     STORE.state.currentIndex++;
@@ -122,9 +127,13 @@ function feedbackView() {
     console.log('wrong answer');
     STORE.state.currentIndex++;
     let feedbackTemplate = generateFeedbackTemplate(`Wrong Answer. The correct answer is 
-      ${STORE.questions[STORE.state.currentIndex].correctAnswer}`);
+      ${correctAnswer}`);
     return feedbackTemplate;
   }
+}
+
+function resultView() {
+  console.log('results view ran')
 }
 /********** RENDER FUNCTION(S) **********/
 
@@ -163,6 +172,14 @@ function handleSelectAnswer() {
     render(feedbackView);
   });
 }
+
+function handleResultButton() {
+  $('main').on('click', '#results', (event) => {
+    console.log('results button works')
+    event.preventDefault();
+    render(resultView);
+  })
+}
 // These functions handle events (submit, click, etc)
 
 // main function will call render with the welcome view.
@@ -190,6 +207,7 @@ function main() {
   handleSelectAnswer();
   handleStartQuiz();
   handleNextQuestion();
+  handleResultButton();
   render(welcomeView);
 }
 
