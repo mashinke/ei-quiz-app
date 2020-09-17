@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
+
 body {
   text-align: center;
   font-family: 'Roboto', sans-serif;
@@ -31,8 +32,9 @@ button, .submit-button {
   background-color: darksalmon;
 }
 
-button:focus, .submit-button:focus {
-  background-color: lightsalmon;
+button:focus, .submit-button:focus, input[type="radio"]:focus + label {
+  padding: calc(1rem - 2px);
+  border: 2px solid darkred;
 }
 
 input[type="radio"] {
@@ -44,7 +46,7 @@ input[type="radio"] {
 }
 
 .answer-item label {
-  background-color: darkolivegreen; 
+  background-color: darkslategray; 
   display: block;
 }
 
@@ -57,10 +59,6 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked + label{
-  background-color: saddlebrown;
-}
-
-input[type="radio"]:focus + label{
   background-color: darkred;
 }
 
