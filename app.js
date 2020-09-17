@@ -105,11 +105,8 @@ function welcomeView() {
 
 function questionView() {
   console.log('questionView has run on question ', STORE.state.currentIndex);
-  let questionTemplate = '';
-  if (STORE.state.currentIndex < STORE.questions.length) {
-    questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
-    return questionTemplate;
-  }
+  let questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
+  return questionTemplate;
 }
 
 function feedbackView() {
