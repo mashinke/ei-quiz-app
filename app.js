@@ -85,7 +85,11 @@ function generateQuestionTemplate(index) {
 function generateAnswerElement(answer) {
   console.log('generate answer template');
   return `
+<<<<<<< HEAD
     <p class="answers">
+=======
+    <p class="answer-item">
+>>>>>>> 205724e7391fe474da03e5c9c0011bc9f6a976cd
       <input type="radio" id="${answer}" name="answer" value="${answer}"> 
       <label for="${answer}">${answer}</label>
     </p>
