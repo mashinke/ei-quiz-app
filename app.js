@@ -74,7 +74,7 @@ function generateQuestionTemplate(index) {
     ${answers}
     ${submitButton}
   </form>
-  ${footerTemplate()}
+  ${generateFooterTemplate()}
   `;
 }
 
@@ -97,7 +97,7 @@ function generateFeedbackTemplate(feedback) {
   ${generateHeaderTemplate()}
     <p>${feedback}</p>
     <p>${button}</p>
-    ${footerTemplate()};
+    ${generateFooterTemplate()};
   `;
 }
 
@@ -114,7 +114,7 @@ function generateHeaderTemplate() {
   return `<header><h2>${STORE.questions[STORE.state.currentIndex].question}</h2></header>`;
 }
 
-function footerTemplate() {
+function generateFooterTemplate() {
   let attempts = STORE.state.currentIndex;
   let currentQuestion = attempts;
   let message = STORE.state.message;
