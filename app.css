@@ -27,8 +27,16 @@ button, .submit-button, .answer-item label{
   border: none;
 }
 
+button, .submit-button {
+  background-color: darksalmon;
+}
+
+button:focus, .submit-button:focus {
+  background-color: lightsalmon;
+}
+
 input[type="radio"] {
-  display: none;
+  appearance: none;
 }
 
 .message {
@@ -52,9 +60,12 @@ input[type="radio"]:checked + label{
   background-color: saddlebrown;
 }
 
+input[type="radio"]:focus + label{
+  background-color: darkred;
+}
+
 .submit-button {
   margin: 1rem 0 0;
-  background-color: darksalmon;
 }
 
 @media all and (min-width: 800px) {
