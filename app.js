@@ -85,7 +85,7 @@ function generateQuestionTemplate(index) {
 function generateAnswerElement(answer) {
   console.log('generate answer template');
   return `
-    <p>
+    <p class="answer-item">
       <input type="radio" id="${answer}" name="answer" value="${answer}"> 
       <label for="${answer}">${answer}</label>
     </p>
@@ -101,7 +101,7 @@ function generateFeedbackTemplate(feedback) {
   ${generateHeaderTemplate()}
     <p>${feedback}</p>
     <p>${button}</p>
-    ${generateFooterTemplate()};
+    ${generateFooterTemplate()}
   `;
 }
 
