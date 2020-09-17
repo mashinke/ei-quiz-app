@@ -36,7 +36,8 @@ const STORE = {
   state: {
     score: 0,
     currentIndex: 0,
-    answer: null,
+    answer: '',
+    message: ''
   },
 };
 /**
@@ -68,11 +69,13 @@ function generateQuestionTemplate(index) {
   let submitButton =
     '<input type="submit" id="select-answer" value="Select Answer">';
   return `
+  ${headerTemplate()};
   <h2>${question.question}</h2>
-    <form>
-      ${answers}
-      ${submitButton}
-    </form>
+  <form>
+    ${answers}
+    ${submitButton}
+  </form>
+  ${footerTemplate()}
   `;
 }
 
@@ -86,7 +89,7 @@ function generateAnswerElement(answer) {
   `;
 }
 
-function generateFeedbackTemplate(feedback){
+function generateFeedbackTemplate(feedback) {
   let button = '<button id="next-question">Next Question</button>';
   if (STORE.state.currentIndex === STORE.questions.length) {
     button = '<button id="results">Results</button>'
@@ -94,6 +97,7 @@ function generateFeedbackTemplate(feedback){
   return `
     <p>${feedback}</p>
     <p>${button}</p>
+    ${footerTemplate()}
   `;
 }
 
@@ -104,6 +108,20 @@ function generateResultTemplate() {
   <p>${STORE.state.score}/${STORE.questions.length}</p>
   <button id="start-over">Start Over</button>
   `
+}
+
+function footerTemplate() {
+  return `
+  <footer>
+    <p>Current score: ${STORE.state.score} corrent answers out of ${STORE.state.currentIndex} attempted</p>
+    <p>Current question: ${STORE.state.currentIndex + 1} out of ${STORE.questions.length}</p>
+  </footer>`;
+}
+
+function headerTemplate() {
+  let message = STORE.state.message;
+  console.log(message);
+  return `<ul>${message}</ul>`;
 }
 
 /********** VIEW FUNCTION(S) **********/
@@ -142,7 +160,7 @@ function feedbackView() {
 }
 
 function resultView() {
-  console.log('results view ran'); 
+  console.log('results view ran');
   let resultTemplate = generateResultTemplate();
   return resultTemplate;
 }
@@ -152,6 +170,7 @@ function render(currentView) {
   console.log('render has run');
   let html = currentView();
   $('main').html(html);
+  STORE.state.message = '';
 }
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
@@ -179,8 +198,14 @@ function handleSelectAnswer() {
   $('main').on('click', '#select-answer', (event) => {
     console.log('answer selected: ', $('input[name="answer"]:checked').val());
     event.preventDefault();
-    STORE.state.answer = $('input[name="answer"]:checked').val();
-    render(feedbackView);
+    let answer = $('input[name="answer"]:checked').val();
+    if (answer) {
+      STORE.state.answer = answer;
+      render(feedbackView);
+    } else {
+      STORE.state.message = 'Please select an answer';
+      render(questionView);
+    }
   });
 }
 
@@ -194,8 +219,8 @@ function handleResultButton() {
 
 function handleStartOverButton() {
   $('main').on('click', '#start-over', (event) => {
-    console.log('start over button works'); 
-    event.preventDefault(); 
+    console.log('start over button works');
+    event.preventDefault();
     STORE.state = {
       score: 0,
       currentIndex: 0,
