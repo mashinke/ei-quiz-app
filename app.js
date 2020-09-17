@@ -90,7 +90,7 @@ function generateAnswerElement(answer) {
 
 function generateFeedbackTemplate(feedback) {
   let button = '<button id="next-question">Next Question</button>';
-  if (STORE.state.currentIndex === STORE.questions.length) {
+  if (STORE.state.currentIndex + 1 === STORE.questions.length) {
     button = '<button id="results">Results</button>';
   }
   return `
