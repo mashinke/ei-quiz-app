@@ -97,6 +97,15 @@ function generateFeedbackTemplate(feedback){
   `;
 }
 
+function generateResultTemplate() {
+  console.log('result template page ran')
+  return `
+  <h2>SCORE: </h2>
+  <p>${STORE.state.score}/${STORE.questions.length}</p>
+  <button id="start-over">Start Over</button>
+  `
+}
+
 /********** VIEW FUNCTION(S) **********/
 
 // These functions will return the views to render
@@ -133,7 +142,9 @@ function feedbackView() {
 }
 
 function resultView() {
-  console.log('results view ran')
+  console.log('results view ran'); 
+  let resultTemplate = generateResultTemplate();
+  return resultTemplate;
 }
 /********** RENDER FUNCTION(S) **********/
 
@@ -180,6 +191,19 @@ function handleResultButton() {
     render(resultView);
   })
 }
+
+function handleStartOverButton() {
+  $('main').on('click', '#start-over', (event) => {
+    console.log('start over button works'); 
+    event.preventDefault(); 
+    STORE.state = {
+      score: 0,
+      currentIndex: 0,
+      answer: null,
+    };
+    render(welcomeView);
+  })
+}
 // These functions handle events (submit, click, etc)
 
 // main function will call render with the welcome view.
@@ -208,6 +232,7 @@ function main() {
   handleStartQuiz();
   handleNextQuestion();
   handleResultButton();
+  handleStartOverButton();
   render(welcomeView);
 }
 
