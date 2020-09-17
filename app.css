@@ -18,7 +18,34 @@ button {
   font-size: 25px;
 }
 
+input {
+  appearance: none;
+}
+
 .message {
   color: red;
 }
+
+.answers {
+  background-color: darkolivegreen; 
+  padding: 2%; 
+  border-radius: 3px;
+}
+
+ {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+}
+.answers:checked {
+  background-color: saddlebrown;
+}
+
+@media all and (min-width: 800px) {
+    .answers {
+      display: flex; 
+      flex-direction: row;
+    }
+} 
+
 
