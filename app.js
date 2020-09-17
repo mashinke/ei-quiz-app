@@ -69,7 +69,7 @@ function generateQuestionTemplate(index) {
   let submitButton =
     '<input type="submit" id="select-answer" value="Select Answer">';
   return `
-  <h2>${question.question}</h2>
+  ${generateHeaderTemplate()}
   <form>
     ${answers}
     ${submitButton}
@@ -94,6 +94,7 @@ function generateFeedbackTemplate(feedback) {
     button = '<button id="results">Results</button>';
   }
   return `
+  ${generateHeaderTemplate()}
     <p>${feedback}</p>
     <p>${button}</p>
     ${footerTemplate()};
@@ -107,6 +108,10 @@ function generateResultTemplate() {
   <p>${STORE.state.score}/${STORE.questions.length}</p>
   <button id="start-over">Start Over</button>
   `;
+}
+
+function generateHeaderTemplate() {
+  return `<header><h2>${STORE.questions[STORE.state.currentIndex].question}</h2></header>`;
 }
 
 function footerTemplate() {
