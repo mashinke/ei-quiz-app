@@ -107,9 +107,12 @@ function generateFeedbackTemplate(feedback) {
 
 function generateResultTemplate() {
   console.log('result template page ran');
+  let finalScore = STORE.state.score;
+  let totalQuestions = STORE.questions.length;
+  console.log(finalScore / totalQuestions);
   return `
   <header><h2>Final Score</h2></header>
-  <p>You answered ${STORE.state.score} questions out of ${STORE.questions.length} correctly!</p>
+  <p>${finalScore / totalQuestions > .5 ? 'Congratulations! ' : '' }You answered ${finalScore} questions out of ${totalQuestions} correctly!</p>
   <button id="start-over">Start Over</button>
   `;
 }
