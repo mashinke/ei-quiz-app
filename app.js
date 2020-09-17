@@ -96,7 +96,7 @@ function generateFeedbackTemplate(feedback) {
   return `
     <p>${feedback}</p>
     <p>${button}</p>
-    ${footerTemplate()}
+    ${footerTemplate()};
   `;
 }
 
@@ -225,7 +225,8 @@ function handleStartOverButton() {
     STORE.state = {
       score: 0,
       currentIndex: 0,
-      answer: null,
+      answer: '',
+      message: ''
     };
     render(welcomeView);
   });
