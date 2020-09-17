@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-'use strict';
+"use strict";
 
 /**
  * Example store structure
@@ -7,36 +7,36 @@
 const STORE = {
   questions: [
     {
-      question: 'Which animal does not appear in the Chinese zodiac?',
-      answers: ['Dragon', 'Rabbit', 'Dog', 'Hummingbird'],
-      correctAnswer: 'Hummingbird',
+      question: "Which animal does not appear in the Chinese zodiac?",
+      answers: ["Dragon", "Rabbit", "Dog", "Hummingbird"],
+      correctAnswer: "Hummingbird",
     },
     {
-      question: 'Which Olympic sport is Michael Phelps known for?',
-      answers: ['Snowboarding', 'Skiing', 'Running', 'Swimming'],
-      correctAnswer: 'Swimming',
+      question: "Which Olympic sport is Michael Phelps known for?",
+      answers: ["Snowboarding", "Skiing", "Running", "Swimming"],
+      correctAnswer: "Swimming",
     },
     {
       question: '"I see dead people," is a line from which horror film…',
-      answers: ['The Sixth Sense', 'The Grudge', 'The Shining', 'The Exorcist'],
-      correctAnswer: 'The Exorcist',
+      answers: ["The Sixth Sense", "The Grudge", "The Shining", "The Exorcist"],
+      correctAnswer: "The Exorcist",
     },
     {
       question:
-        'Which one of these characters aren\'t a part of the Friends group?',
-      answers: ['Rachel', 'Joey', 'Gunther', 'Monica'],
-      correctAnswer: 'Gunther',
+        "Which one of these characters aren't a part of the Friends group?",
+      answers: ["Rachel", "Joey", "Gunther", "Monica"],
+      correctAnswer: "Gunther",
     },
     {
-      question: 'Fe is the chemical symbol for..',
-      answers: ['Zinc', 'Hydrogen', 'Fluorine', 'Iron'],
-      correctAnswer: 'Iron',
+      question: "Fe is the chemical symbol for..",
+      answers: ["Zinc", "Hydrogen", "Fluorine", "Iron"],
+      correctAnswer: "Iron",
     },
   ],
   state: {
     score: 0,
     currentIndex: 0,
-    answer: null
+    answer: null,
   },
 };
 /**
@@ -58,9 +58,9 @@ const STORE = {
 
 // These functions return HTML templates
 function generateQuestionTemplate(index) {
-  console.log('generate question template');
+  console.log("generate question template");
   let question = STORE.questions[index];
-  let answers = question.answers.map(generateAnswerElement).join('');
+  let answers = question.answers.map(generateAnswerElement).join("");
   let submitButton =
     '<input type="submit" id="select-answer" value="Select Answer">';
   return `
@@ -73,7 +73,7 @@ function generateQuestionTemplate(index) {
 }
 
 function generateAnswerElement(answer) {
-  console.log('generate answer template');
+  console.log("generate answer template");
   return `
     <p>
       <input type="radio" id="${answer}" name="answer" value="${answer}"> 
@@ -87,38 +87,45 @@ function generateAnswerElement(answer) {
 // These functions will return the views to render
 
 function welcomeView() {
-  console.log('welcomeView has run');
+  console.log("welcomeView has run");
   return `
   <button id="start-quiz">Start Quiz</button>
   `;
 }
 
 function questionView() {
-  console.log('questionView has run on question ', STORE.state.currentIndex);
-  let questionTemplate = '';
-  let currentIndex = STORE.state.currentIndex;
-  if (STORE.state.answer) {
-    if (STORE.state.answer === STORE.questions[currentIndex].correctAnswer) {
-      STORE.state.score++;
-      STORE.state.currentIndex++;
-      return `
+  console.log("questionView has run on question ", STORE.state.currentIndex);
+  let questionTemplate = "";
+  if (STORE.state.currentIndex < STORE.questions.length) {
+    questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
+    return questionTemplate;
+  }
+}
+
+function feedbackView() {
+  console.log("feedback view ran");
+  if (STORE.state.answer === STORE.questions[currentIndex].correctAnswer) {
+    console.log("right answer");
+    STORE.state.score++;
+    STORE.state.currentIndex++;
+    return `
       Correct Answer
       <button id="next-question">Next Question</button>
       `;
-    }
+  } else {
+    console.log("wrong answer");
+    STORE.state.currentIndex++;
+    return `
+      Wrong Answer. The correct answer is ${STORE.questions[currentIndex].correctAnswer}
+      `;
   }
-  if(STORE.state.currentIndex < STORE.questions.length){
-    questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
-    return questionTemplate;
-  } 
 }
-
 /********** RENDER FUNCTION(S) **********/
 
 function render(currentView) {
-  console.log('render has run');
+  console.log("render has run");
   let html = currentView();
-  $('main').html(html);
+  $("main").html(html);
 }
 
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
@@ -126,30 +133,29 @@ function render(currentView) {
 /********** EVENT HANDLER FUNCTIONS **********/
 
 function handleStartQuiz() {
-  console.log('handleStartQuiz has run');
-  $('main').on('click', '#start-quiz', (event) => {
-    console.log('start quiz click detected');
+  console.log("handleStartQuiz has run");
+  $("main").on("click", "#start-quiz", (event) => {
+    console.log("start quiz click detected");
     event.preventDefault();
     render(questionView);
   });
 }
 
 function handleNextQuestion() {
-  $('main').on('click', '#next-question', (event) => {
-    console.log('next question click detected');
+  $("main").on("click", "#next-question", (event) => {
+    console.log("next question click detected");
     event.preventDefault();
     render(questionView);
   });
 }
 
 function handleSelectAnswer() {
-  $('main').on('click', '#select-answer', (event) => {
-    console.log('answer selected: ', $('input[name="answer"]:checked').val());
+  $("main").on("click", "#select-answer", (event) => {
+    console.log("answer selected: ", $('input[name="answer"]:checked').val());
     event.preventDefault();
     STORE.state.answer = $('input[name="answer"]:checked').val();
-    render(questionView);
-  })
-
+    render(feedbackView);
+  });
 }
 // These functions handle events (submit, click, etc)
 
@@ -164,6 +170,7 @@ function handleSelectAnswer() {
 // Feedback view will have a next question button and show user if the answer selected is the correct one.
 // and a next question button that will render the next question.
 
+// If no selection is made and the select answer button is clicked, an error message will pop up
 // If question state is undefined, Question view will initialize it.
 
 // When the last question is reached, there will be a submit button.
