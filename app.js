@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 /**
@@ -67,7 +66,6 @@ function generateWelcomeViewTemplate() {
 }
 
 function generateQuestionTemplate(index) {
-  console.log('generate question template');
   let question = STORE.questions[index];
   let answers = question.answers.map(generateAnswerElement).join('');
   let submitButton =
@@ -85,7 +83,6 @@ function generateQuestionTemplate(index) {
 }
 
 function generateAnswerElement(answer) {
-  console.log('generate answer template');
   return `
     <p class="answer-item">
       <input type="radio" id="${answer}" name="answer" value="${answer}"> 
@@ -108,10 +105,8 @@ function generateFeedbackTemplate(feedback) {
 }
 
 function generateResultTemplate() {
-  console.log('result template page ran');
   let finalScore = STORE.state.score;
   let totalQuestions = STORE.questions.length;
-  console.log(finalScore / totalQuestions);
   return `
   <header><h2>Final Score</h2></header>
   <p>${finalScore / totalQuestions > .5 ? 'Congratulations! ' : '' }You answered ${finalScore} questions out of ${totalQuestions} correctly!</p>
@@ -127,7 +122,6 @@ function generateFooterTemplate() {
   let attempts = STORE.state.currentIndex;
   let currentQuestion = attempts + 1;
   let message = STORE.state.message;
-  console.log('answer ', STORE.state.answer);
   if (STORE.state.answer) {
     attempts++;
   }
@@ -139,33 +133,27 @@ function generateFooterTemplate() {
   </footer>`;
 }
 
-/********** VIEW FUNCTION(S) **********/
+/********** VIEW FUNCTION **********/
 
 // These functions will return the views to render
 
 function welcomeView() {
-  console.log('welcomeView has run');
   let welcomeViewTemplate = generateWelcomeViewTemplate();
   return welcomeViewTemplate;
 }
 
 function questionView() {
-  console.log('questionView has run on question ', STORE.state.currentIndex);
   let questionTemplate = generateQuestionTemplate(STORE.state.currentIndex);
   return questionTemplate;
 }
 
 function feedbackView() {
-  console.log('feedback view ran');
-  console.log('state: ', STORE.state);
   let correctAnswer = STORE.questions[STORE.state.currentIndex].correctAnswer;
   let feedbackTemplate = '';
   if (STORE.state.answer === correctAnswer) {
-    console.log('right answer');
     STORE.state.score++;
     feedbackTemplate = generateFeedbackTemplate(`${correctAnswer} is correct!`);
   } else {
-    console.log('wrong answer');
     feedbackTemplate = generateFeedbackTemplate(`Wrong Answer. The correct answer is 
       ${correctAnswer}`);
   }
@@ -174,14 +162,12 @@ function feedbackView() {
 }
 
 function resultView() {
-  console.log('results view ran');
   let resultTemplate = generateResultTemplate();
   return resultTemplate;
 }
 /********** RENDER FUNCTION(S) **********/
 
 function render(currentView) {
-  console.log('render has run');
   $('h1, title').html(STORE.title);
   let html = currentView();
   $('main').html(html);
@@ -193,9 +179,7 @@ function render(currentView) {
 /********** EVENT HANDLER FUNCTIONS **********/
 
 function handleStartQuiz() {
-  console.log('handleStartQuiz has run');
   $('main').on('click', '#start-quiz', (event) => {
-    console.log('start quiz click detected');
     event.preventDefault();
     render(questionView);
   });
@@ -203,7 +187,6 @@ function handleStartQuiz() {
 
 function handleNextQuestion() {
   $('main').on('click', '#next-question', (event) => {
-    console.log('next question click detected');
     event.preventDefault();
     STORE.state.answer = null;
     render(questionView);
@@ -212,7 +195,6 @@ function handleNextQuestion() {
 
 function handleSelectAnswer() {
   $('main').on('click', '#select-answer', (event) => {
-    console.log('answer selected: ', $('input[name="answer"]:checked').val());
     event.preventDefault();
     let answer = $('input[name="answer"]:checked').val();
     if (answer) {
@@ -227,7 +209,6 @@ function handleSelectAnswer() {
 
 function handleResultButton() {
   $('main').on('click', '#results', (event) => {
-    console.log('results button works');
     event.preventDefault();
     render(resultView);
   });
@@ -235,7 +216,6 @@ function handleResultButton() {
 
 function handleStartOverButton() {
   $('main').on('click', '#start-over', (event) => {
-    console.log('start over button works');
     event.preventDefault();
     STORE.state = {
       score: 0,
@@ -246,28 +226,6 @@ function handleStartOverButton() {
     render(welcomeView);
   });
 }
-// These functions handle events (submit, click, etc)
-
-// main function will call render with the welcome view.
-
-// render will render the current view.
-
-// welcome view will render with start button.
-// when start button is clicked, it will render questions view.
-
-// Question view will have a select button which will re-render the question with feedback view.
-// Feedback view will have a next question button and show user if the answer selected is the correct one.
-// and a next question button that will render the next question.
-
-// If no selection is made and the select answer button is clicked, an error message will pop up
-// If question state is undefined, Question view will initialize it.
-
-// When the last question is reached, there will be a submit button.
-
-// The submit button, will render results view. Results view will receive an argument
-// that will hold the final score.
-
-// results view will have a start over button that will render the welcome view.
 
 function main() {
   handleSelectAnswer();
